@@ -16,7 +16,7 @@ export async function getAccessControlDetails (args) {
     var accessControlList = [];
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
+        // console.debug(doc.id, " => ", doc.data());
         var docData = doc.data();
         docData.id = doc.id;
         accessControlList.push(docData);

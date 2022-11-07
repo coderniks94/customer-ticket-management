@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react"
 import TicketTile from "../components/TicketTile";
 import { useAuth } from "../contexts/AuthContextProvider";
-import { getAccessControlDetails } from "../firebase/accessControlService";
-import { getUserDetailsFromDbById } from "../firebase/dbUserDetailService";
 import { getAllOpenTickets } from "../firebase/ticketService";
-import {userHasAccessToPage} from "../utils/accessControlUtil";
 import Loading from "../components/Loading";
 import NoAccess from "../components/NoAccess";
 
@@ -12,41 +9,23 @@ import NoAccess from "../components/NoAccess";
 /**
  * This page is for support role (maybe admin in future)
  */
-export default function CustomerTicketsPage(){
+export default function CustomerTicketsPage() {
     const [allOpenTickets, setAllOpenTickets] = useState([]);
-    const [hasPageAccess, setHasPageAccess] = useState(false);
+    // const [hasPageAccess, setHasPageAccess] = useState(false);
     const [userDetails, setUserDetails] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    const {loggedInUser} = useAuth();
+    const { loggedInUser } = useAuth();
 
-    useEffect(()=>{
-        var args = {
-            entity: "customer-tickets",
-            entityType: "page",
-            loggedInUser
-        }
-        userHasAccessToPage(args).then((response)=>{
-            setHasPageAccess(response);
-            if(!response) {
-                setIsLoading(false);
-            }
+    useEffect(() => {
+
+        getAllOpenTickets().then((response) => {
+            setAllOpenTickets(response);
+            setIsLoading(false);
         })
-    }, []);
 
-    useEffect(()=>{
-        if(hasPageAccess) {
-            getAllOpenTickets().then((response)=>{
-                setAllOpenTickets(response);
-                setIsLoading(false);
-            })
-        }
-        
-    }, [hasPageAccess])
+    }, [])
 
-    const getTicketsListView = function() {
-        if(!hasPageAccess) {
-            return <NoAccess/>;
-        }
+    const getTicketsListView = function () {
         return (
             <div>
                 <h1>All Customer open tickets list</h1>
@@ -64,7 +43,7 @@ export default function CustomerTicketsPage(){
 
     return (
         <>
-            {isLoading ? <Loading/> : getTicketsListView()}
+            {isLoading ? <Loading /> : getTicketsListView()}
         </>
     )
 }

@@ -13,22 +13,22 @@ export async function getCompaniesList() {
     // const docSnap = await getDoc(docRef);
 
     // if (docSnap.exists()) {
-    //     console.log("Document data:", docSnap.data());
+    //     console.debug("Document data:", docSnap.data());
     //     return docSnap.data();
     // } else {
     //     // doc.data() will be undefined in this case
-    //     console.log("No such document!");
+    //     console.debug("No such document!");
     //     return null;
     // }
     const companiesRef = collection(db, companyCollection);
     const q = query(companiesRef);
     const querySnapshot = await getDocs(q);
-    console.log("querySnapshot: ", querySnapshot);
+    console.debug("querySnapshot: ", querySnapshot);
     // return querySnapshot;
     var companiesList = [];
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
+        // console.debug(doc.id, " => ", doc.data());
         var docData = doc.data();
         docData.id = doc.id;
         companiesList.push(docData);

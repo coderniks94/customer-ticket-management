@@ -10,7 +10,7 @@ export async function getAllRoles() {
     var result = [];
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
+        // console.debug(doc.id, " => ", doc.data());
         result.push({
             id: doc.id,
             name: doc.data().name

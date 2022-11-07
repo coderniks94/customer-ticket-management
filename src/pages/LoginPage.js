@@ -16,12 +16,12 @@ export default function LoginPage() {
     const { loggedInUser } = useAuth();
 
     const queryParams = new URLSearchParams(window.location.search);
-    // console.log("queryParams: ", queryParams);
-    // console.log("queryParams.get(\"redirect-path\") ", queryParams.get("redirect-path"));
+    // console.debug("queryParams: ", queryParams);
+    // console.debug("queryParams.get(\"redirect-path\") ", queryParams.get("redirect-path"));
 
     // const redirectPage = window.location || "/";
     const redirectPath = queryParams.get("redirect-path") || "/";
-    // console.log("redirectPath: ", redirectPath);
+    // console.debug("redirectPath: ", redirectPath);
 
     const handleLoginClick = function (event) {
         event.preventDefault();
@@ -29,9 +29,9 @@ export default function LoginPage() {
         if(validateFields()){
             setIsLoading(true);
             // var loginAction = loginUser(email, password);
-            // console.log("loginAction: ",loginAction);
+            // console.debug("loginAction: ",loginAction);
             loginUser(email, password).then(function(response){
-                console.log(response);
+                console.debug(response);
                 if(response.status === "failed"){
                     // setErrorMessage(response.message);
                     setAlert({message: response.message, type: "error"});

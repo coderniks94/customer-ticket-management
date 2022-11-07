@@ -1,20 +1,63 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContextProvider";
+import { doesUserHaveAccessToEntity, userHasAccessToPage } from "../utils/accessControlUtil";
+import Loading from "./Loading";
+import NoAccess from "./NoAccess";
 
 export default function PrivateRoute() {
-    const {loggedInUser} = useAuth();
+    const [hasPageAccess, setHasPageAccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const { loggedInUser, userDetailsFromDb } = useAuth();
+    let location = useLocation();
 
-    console.log("window.location.href: "+window.location.href);
-    console.log("window.location.pathname: "+window.location.pathname);
+    useEffect(() => {
+        console.debug("location modified: ", location);
+        console.debug("loggedInUser: ", loggedInUser);
+        console.debug("userDetailsFromDb: ", userDetailsFromDb);
+        var args = {
+            entity: "/" + location.pathname.split("/")[1],
+            entityType: "page",
+            loggedInUser,
+            userDetailsFromDb
+        }
+        // userHasAccessToPage(args).then((response) => {
+        //     setHasPageAccess(response);
+        //     setIsLoading(false);
+        // })
+
+        doesUserHaveAccessToEntity(args).then((response) => {
+            setHasPageAccess(response);
+            setIsLoading(false);
+        })
+    }, [location]);
+
+    
     // const loginRedirectPath = (window.location.pathname && window.location.pathname !== "/logout") ? window.location.pathname : ""
 
     var loginNavigationPath = "/login";
 
-    if(window.location.pathname && window.location.pathname !== "/logout" && window.location.pathname !== "/") {
-        loginNavigationPath += "?redirect-path=" + window.location.pathname;
+    if (location.pathname && location.pathname !== "/logout" && location.pathname !== "/") {
+        loginNavigationPath += "?redirect-path=" + location.pathname;
+    }
+
+    function getView() {
+        if (isLoading) {
+            return <Loading />
+        }
+        if (!loggedInUser) {
+            return <Navigate to={loginNavigationPath} />
+        }
+
+        if (!hasPageAccess) {
+            return <NoAccess />;
+        }
+
+        return <Outlet />;
     }
 
     return (
-        loggedInUser ? <Outlet/> : <Navigate to={loginNavigationPath}/>
+        <>{getView()}</>
     )
+    //loggedInUser ? <Outlet/> : <Navigate to={loginNavigationPath}/>
 }

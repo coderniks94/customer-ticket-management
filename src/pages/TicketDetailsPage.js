@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom'
 import AlertMessage from '../components/AlertMessage';
 import { useAuth } from '../contexts/AuthContextProvider';
-import { getUserDetailsFromDbById } from '../firebase/dbUserDetailService';
-import { getTicketDetailsById, listenToSnapshot, updateTicketDetails } from '../firebase/ticketService';
+import { listenToSnapshot, updateTicketDetails } from '../firebase/ticketService';
 
 export default function TicketDetailsPage(){
     const [ticketData, setTicketData] = useState();
@@ -12,12 +11,12 @@ export default function TicketDetailsPage(){
     const [newNotes, setNewNotes] = useState("");
     const [allTicketStates, setAllTicketStates] = useState(["Open", "Closed"]);
     const [isSupportRole, setIsSupportRole] = useState(false);
-    const [userDetails, setUserDetails] = useState();
+    // const [userDetails, setUserDetails] = useState();
     // const location = useLocation();
 
     const location = useLocation();
     const { ticketId } = useParams();
-    const {loggedInUser} = useAuth();
+    const {userDetailsFromDb, loggedInUser} = useAuth();
 
     
     useEffect(function () {
@@ -28,14 +27,24 @@ export default function TicketDetailsPage(){
 
         // getTicketDetailsById(ticketId).then((response) => {
         //     setTicketData(response);
-        //     console.log("response: ", response);
+        //     console.debug("response: ", response);
         // });
 
-        getUserDetailsFromDbById(loggedInUser.uid).then((response)=>{
-            console.debug("User details: ", response);
-            setUserDetails(response);
-            setUserHasSupportRole(response);
-        })
+        // getUserDetailsFromDbById(loggedInUser.uid).then((response)=>{
+        //     // console.debug("User details: ", response);
+        //     setUserDetails(response);
+        //     setUserHasSupportRole(response);
+        // })
+
+        // console.debug("userDetailsFromDb: ", userDetailsFromDb);
+
+        var supportRole = userDetailsFromDb.roles.filter((role)=>{
+            return role.name === "support";
+        });
+
+        // if(supportRole && supportRole.length > 0){
+        console.debug("isSupportRole: ", supportRole && supportRole.length > 0);
+        setIsSupportRole(supportRole && supportRole.length > 0);
 
         const unsub = listenToSnapshot(ticketId, setTicketData);
 

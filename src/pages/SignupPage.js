@@ -24,7 +24,7 @@ export default function SignupPage() {
     useEffect(function () {
         // getCompaniesList();
         getCompaniesList().then(function (response) {
-            console.log("response: ", response);
+            console.debug("response: ", response);
             setCompaniesList(response);
         });
 
@@ -74,7 +74,7 @@ export default function SignupPage() {
                 }
             });
         }
-        console.log("alert: ", alert);
+        console.debug("alert: ", alert);
 
     }
 

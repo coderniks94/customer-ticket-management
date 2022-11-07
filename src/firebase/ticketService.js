@@ -36,9 +36,9 @@ async function incrementAndGetCount() {
             // statsDoc = await transaction.get(statsDocRef);
             return statsDoc.data();
         });
-        console.log("Transaction successfully committed!");
+        console.debug("Transaction successfully committed!");
     } catch (e) {
-        console.log("Transaction failed: ", e);
+        console.debug("Transaction failed: ", e);
     }
 }
 
@@ -145,7 +145,7 @@ export async function getTicketDetailsById(ticketId) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        console.debug("Document data:", docSnap.data());
+        console.debug("Ticket data:", docSnap.data());
         return docSnap.data();
     } else {
         // doc.data() will be undefined in this case

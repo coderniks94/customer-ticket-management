@@ -15,6 +15,8 @@ import MyTicketsPage from './pages/MyTicketsPage';
 import CustomerTicketsPage from './pages/CustomerTicketsPage';
 import TicketDetailsPage from './pages/TicketDetailsPage';
 import ProfilePage from './pages/ProfilePage';
+import AdminHomePage from './pages/AdminHomePage';
+import AccessControlPage from './pages/AccessControlPage';
 
 function App() {
     return (
@@ -45,6 +47,8 @@ function App() {
                                 <Route path={"/profile"} element={<ProfilePage />}></Route>
                                 <Route path={"/customer-home"} element={<CustomerHomePage />}></Route>
                                 <Route path={"/support-home"} element={<SupportHomePage />}></Route>
+                                <Route path={"/admin-home"} element={<AdminHomePage />}></Route>
+                                <Route path={"/access-control"} element={<AccessControlPage />}></Route>
                                 <Route path={"/create-ticket"} element={<CreateTicketPage />}></Route>
                                 <Route path={"/create-ticket"} element={<CreateTicketPage />}></Route>
                                 <Route path={"/my-tickets"} element={<MyTicketsPage />}></Route>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function AlertMessage(props) {
-    console.log("received alert obj: ", props);
+    console.debug("received alert obj: ", props);
     var iconDivClass = "";
     var iconClass = "";
     if(props.alert.type === "error"){

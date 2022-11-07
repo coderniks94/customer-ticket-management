@@ -1,37 +1,31 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { useAuth } from "../contexts/AuthContextProvider"
-import { getUserDetailsFromDbById } from "../firebase/dbUserDetailService";
 
 export default function HomePage() {
-    const [userDetails, setUserDetails] = useState();
-    const { loggedInUser } = useAuth();
-
-
-    useEffect(() => {
-        getUserDetailsFromDbById(loggedInUser.uid).then((response) => {
-            setUserDetails(response || {});
-        });
-    }, []);
-    // console.log("loggedInUser: ", loggedInUser)
+    const { loggedInUser, userDetailsFromDb } = useAuth();
 
     const getRedirectPath = function() {
         var navigatePath = "";
-        if(!userDetails.roles || userDetails.roles.length == 0) {
+        if(!userDetailsFromDb.roles || userDetailsFromDb.roles.length == 0) {
             return <div>You don't have permission to access</div>
         }
 
-        console.debug("userDetails.roles:", userDetails.roles);
+        console.debug("userDetailsFromDb.roles:", userDetailsFromDb.roles);
 
-        if(userDetails.roles.find(role => role.name === "support")) {
+        if(userDetailsFromDb.roles.find(role => role.name === "support")) {
             console.debug("support role");
             return <Navigate to="/support-home"/>
         }
 
-        if(userDetails.roles.find(role => role.name === "customer")) {
+        if(userDetailsFromDb.roles.find(role => role.name === "customer")) {
             console.debug("customer role");
             return <Navigate to="/customer-home"/>
+        }
+
+        if(userDetailsFromDb.roles.find(role => role.name === "admin")) {
+            console.debug("customer role");
+            return <Navigate to="/admin-home"/>
         }
         
         return  <div>You don't have permission to access</div>
@@ -39,7 +33,7 @@ export default function HomePage() {
 
     return (
         <main>
-            {userDetails ? getRedirectPath() : <Loading/>}
+            {userDetailsFromDb ? getRedirectPath() : <Loading/>}
         </main>
     )
 }

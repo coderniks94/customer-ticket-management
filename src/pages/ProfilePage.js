@@ -18,9 +18,9 @@ export default function ProfilePage() {
     const [userRoles, setUserRoles] = useState([]);
     const [alert, setAlert] = useState();
 
-    const [userDetails, setUserDetails] = useState({});
+    // const [userDetails, setUserDetails] = useState({});
 
-    const {loggedInUser, updateUserProfile, updateUserEmail, updateUserPassword} = useAuth();
+    const {loggedInUser, updateUserProfile, updateUserEmail, updateUserPassword, userDetailsFromDb} = useAuth();
 
     useEffect(function(){
         // getCompaniesList();
@@ -45,12 +45,14 @@ export default function ProfilePage() {
         setName(loggedInUser.displayName || "");
         setPhotoUrl(loggedInUser.photoURL || "");
         setEmail(loggedInUser.email || "");
-        getUserDetailsFromDbById(loggedInUser.uid).then(function(response){
-            // console.debug("user details: ",response);
-            setUserDetails(response);
-            setCompany(response.company || "");
-            setUserRoles(response.roles || []);
-        })
+        setCompany(userDetailsFromDb.company || "");
+        setUserRoles(userDetailsFromDb.roles || []);
+        // getUserDetailsFromDbById(loggedInUser.uid).then(function(response){
+        //     // console.debug("user details: ",response);
+        //     // setUserDetails(response);
+        //     setCompany(userDetailsFromDb.company || "");
+        //     setUserRoles(userDetailsFromDb.roles || []);
+        // })
     }, [loggedInUser]);
 
     const handleUpdateProfile = function(event) {
@@ -75,24 +77,24 @@ export default function ProfilePage() {
         }
         
         updateUserProfile(userAuthDetailsToUpdate).then((response)=>{
-            console.log(response.message);
+            console.debug(response.message);
         })
     }
 
     const updateUserAuthEmail = function() {
         updateUserEmail(email).then((response)=>{
-            console.log(response.message);
+            console.debug(response.message);
         })
     }
 
     const updateUserAuthPassword = function() {
         updateUserPassword(password).then((response)=>{
-            console.log(response.message);
+            console.debug(response.message);
         })
     }
 
     const updateDbUserData = function() {
-        var dbUserDetailsToUpdate = {...userDetails};
+        var dbUserDetailsToUpdate = {...userDetailsFromDb};
         
         dbUserDetailsToUpdate.company = company;
 
@@ -154,7 +156,7 @@ export default function ProfilePage() {
 
                 {userRoles && userRoles.length > 0 && 
                 <div>
-                    <label htmlFor="companySelect">Roles</label>
+                    <label htmlFor="companySelect">Roles</label>&nbsp;
                     {userRoles.map((role)=>{return <span className="badge rounded-pill bg-secondary mt-3" key={role.id}>{role.name}</span>})}
                 </div>}
                 

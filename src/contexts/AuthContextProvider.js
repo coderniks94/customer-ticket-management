@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../firebase/config";
-import { updateUserDetails } from "../firebase/dbUserDetailService";
+import { getUserDetailsFromDbById, updateUserDetails } from "../firebase/dbUserDetailService";
 
 const AuthContext = React.createContext();
 
@@ -12,18 +12,33 @@ export function useAuth() {
 export default function AuthContextProvider(props) {
     const [loggedInUser, setLoggedInUser] = useState();
     const [loading, setLoading] = useState(true);
+    const [userDetailsFromDb, setUserDetailsFromDb] = useState();
+
+    useEffect(function(){
+        console.log("loggedInUser modified");
+        loggedInUser && getUserDetailsFromDbById(loggedInUser.uid).then(function(response){
+            setUserDetailsFromDb(response || {});
+        })
+    },[loggedInUser])
+
+    // function setAllUserData(user) {
+    //     setLoggedInUser(user);
+    //     user && getUserDetailsFromDbById(user.uid).then(function(response){
+    //         setUserDetailsFromDb(response || {});
+    //         // setLoggedInUser(user);
+    //     })
+    // }
 
     function signUpUser({ email, password }) {
         return createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
             setLoggedInUser(userCredential.user);
-            // updateUserDetails(userCredential.user).then(function(response){
-            //     console.log("Updated user details: ", response);
-            // });
-            console.log("Signup success.");
+            // setAllUserData(userCredential.user);
+
+            console.debug("Signup success.");
             return { status: "success", message: "Signup success.", user: userCredential.user };
             // setLoading(false);
         }).catch((error) => {
-            console.log("Signup failed: ", error);
+            console.debug("Signup failed: ", error);
             return { status: "failed", message: "Signup failed: " + error }
             // setLoading(false);
         })
@@ -33,11 +48,12 @@ export default function AuthContextProvider(props) {
         // setLoading(true);
         return signInWithEmailAndPassword(auth, email, password).then(function (userCredential) {
             setLoggedInUser(userCredential.user);
-            console.log("Login success.");
+            // setAllUserData(userCredential.user);
+            console.debug("Login success.");
             // setLoading(false);
             return { status: "success", message: "Login success" };
         }).catch(function (error) {
-            console.log("Login failed.", error);
+            console.debug("Login failed.", error);
             // setLoading(false);
             return { status: "failed", message: "Login failed. " + error };
         });
@@ -46,16 +62,11 @@ export default function AuthContextProvider(props) {
     function logoutUser() {
         // setLoading(true);
         return signOut(auth).then(() => {
-            // Sign-out successful.
-            // console.log("Sign-out successful.");
             setLoggedInUser(null);
+            setUserDetailsFromDb(null);
             return { status: "success", message: "Sign-out successful." };
-            // setLoading(false);
         }).catch((error) => {
-            // An error happened.
-            // console.log("Sign-out failed.", error);
             return { status: "failed", message: "Sign-out failed." };
-            // setLoading(false);
         });
 
     }
@@ -64,14 +75,10 @@ export default function AuthContextProvider(props) {
         // { displayName: "Jane Q. User", photoURL: "https://example.com/jane-q-user/profile.jpg" }
         return updateProfile(auth.currentUser, userDetails)
             .then(() => {
-                // Profile updated!
-                // ...
-                // console.log("Profile update successful");
+                console.debug("Profile update successful");
                 return {status: "success", message: "Profile updated successfully."}
             }).catch((error) => {
-                // An error occurred
-                // ...
-                // console.log("Profile update failed", error);
+                console.debug("Profile update failed", error);
                 return {status: "failed", message: "Profile update failed.", error}
             });
     }
@@ -84,7 +91,7 @@ export default function AuthContextProvider(props) {
           }).catch((error) => {
             // An error occurred
             // ...
-            return {status: "failes", message: "Email update failed.", error}
+            return {status: "failed", message: "Email update failed.", error}
           });
     }
 
@@ -95,13 +102,14 @@ export default function AuthContextProvider(props) {
           }).catch((error) => {
             // An error ocurred
             // ...
-            return {status: "failes", message: "Password update failed.", error}
+            return {status: "failed", message: "Password update failed.", error}
           });
     }
 
     useEffect(function () {
         const unsub = onAuthStateChanged(auth, function (user) {
             setLoggedInUser(user);
+            // setAllUserData(user);
             setLoading(false);
         })
 
@@ -110,6 +118,7 @@ export default function AuthContextProvider(props) {
 
     const value = {
         loggedInUser, 
+        userDetailsFromDb,
         signUpUser, 
         loginUser, 
         logoutUser, 
