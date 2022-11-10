@@ -1,13 +1,16 @@
+import { Link } from "react-router-dom";
+
 export default function Card() {
     return (
-        <div class="card">
-            {/* <div class="card-header">
+        <div className="card">
+            {/* <div className="card-header">
                 8
             </div> */}
-            <div class="card-body">
-                <h3 class="card-title">8</h3>
-                <p class="card-text">Open Tickets</p>
-                <a href="#" class="btn btn-primary">View Open Tickets</a>
+            <div className="card-body">
+                <h3 className="card-title">8</h3>
+                <p className="card-text">Open Tickets</p>
+                <Link to={'/my-tickets?state=open'} className="btn btn-primary stretched-link">View Open Tickets</Link>
+                {/* <a href="#" className="btn btn-primary">View Open Tickets</a> */}
             </div>
         </div>
     )
