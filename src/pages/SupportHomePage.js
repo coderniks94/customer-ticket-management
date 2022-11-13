@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SupportHomeTicketCountCard from "../components/SupportHomeTicketCountCard";
 import { useAuth } from "../contexts/AuthContextProvider";
 
 export default function SupportHomePage() {
@@ -9,8 +10,9 @@ export default function SupportHomePage() {
         return (
             <div>
 
-                <h1>Support Home Page</h1>
-                <Link to={"/customer-tickets"}>View customer tickets</Link>
+                <h3>{'Hello, ' + loggedInUser.displayName}</h3>
+                {/* <Link to={"/customer-tickets"}>View customer tickets</Link> */}
+                <SupportHomeTicketCountCard />
             </div>
         )
     }

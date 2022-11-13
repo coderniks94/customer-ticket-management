@@ -56,7 +56,7 @@ export default function CustomerHomeTicketCountCard(props) {
             <div className="card-body">
                 <h3 className="card-title">{ticketCount}</h3>
                 <p className="card-text">{cardText}</p>
-                <Link to={ticketsRedirectLink} className="btn btn-primary stretched-link">{viewTicketsButtonText}</Link>
+                <Link to={ticketsRedirectLink} className="btn btn-outline-primary stretched-link">{viewTicketsButtonText}</Link>
                 {/* <a href="#" className="btn btn-primary">View Open Tickets</a> */}
             </div>
         </div>

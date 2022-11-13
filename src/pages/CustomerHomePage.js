@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import CustomerHomeTicketCountCard from "../components/CustomerHomeTicketCountCard";
+import { useAuth } from "../contexts/AuthContextProvider";
 
 export default function CustomerHomePage() {
+    const {loggedInUser} = useAuth();
     const getHomePageView = function () {
         return (
             <div>
-                <h1>Customer Home Page</h1>
+                <h3>{'Hello, ' + loggedInUser.displayName}</h3>
                 {/* <button type="button" class="btn btn-link">View tickets created by you</button> */}
 
                 <br />

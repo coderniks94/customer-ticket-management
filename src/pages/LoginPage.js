@@ -14,6 +14,10 @@ export default function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const { loginUser } = useAuth();
     const { loggedInUser } = useAuth();
+    const [testLogin, setTestLogin] = useState(true);
+    const [testCustomerEmail, setTestCustomerEmail] = useState("user@customer.com");
+    const [testSupportEmail, setTestSupportEmail] = useState("user@mycompany.com");
+    const [testPassword, setTestPassword] = useState("password");
 
     const queryParams = new URLSearchParams(window.location.search);
     // console.debug("queryParams: ", queryParams);
@@ -23,25 +27,35 @@ export default function LoginPage() {
     const redirectPath = queryParams.get("redirect-path") || "/";
     // console.debug("redirectPath: ", redirectPath);
 
+    const loginWithEmailPassword = function(email, password) {
+        setIsLoading(true);
+        loginUser(email, password).then(function(response){
+            console.debug(response);
+            if(response.status === "failed"){
+                // setErrorMessage(response.message);
+                setAlert({message: response.message, type: "error"});
+            } else if(response.status === "success"){
+                setAlert({message: response.message, type: "success"});
+            }
+            setIsLoading(false);
+        })
+    }
+
     const handleLoginClick = function (event) {
         event.preventDefault();
         
         if(validateFields()){
-            setIsLoading(true);
-            // var loginAction = loginUser(email, password);
-            // console.debug("loginAction: ",loginAction);
-            loginUser(email, password).then(function(response){
-                console.debug(response);
-                if(response.status === "failed"){
-                    // setErrorMessage(response.message);
-                    setAlert({message: response.message, type: "error"});
-                } else if(response.status === "success"){
-                    setAlert({message: response.message, type: "success"});
-                }
-                setIsLoading(false);
-            })
+            loginWithEmailPassword(email, password);
         }
         
+    }
+
+    const handleTestLoginCustomerClick = function() {
+        loginWithEmailPassword(testCustomerEmail, testPassword);
+    }
+
+    const handleTestLoginSupportClick = function() {
+        loginWithEmailPassword(testSupportEmail, testPassword);
     }
 
     const validateFields = function() {
@@ -64,19 +78,18 @@ export default function LoginPage() {
         return <Navigate to={redirectPath}></Navigate>
     }
 
-    // const getErrorAlert = function(){
-    //     return (
-    //         <div className="alert alert-danger d-flex align-items-center" role="alert">
-    //             {/* <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg> */}
-    //             <i className="bi bi-exclamation-triangle"></i>
-    //             <div>
-    //                 {errorMessage}
-    //             </div>
-    //         </div>
-    //     )
-    // }
+    const getTestLoginForm = function () {
+        return <>
+            <button type="button" className="btn btn-link" onClick={handleTestLoginCustomerClick}>Login as Customer</button>
+            <button type="button" className="btn btn-link" onClick={handleTestLoginSupportClick}>Login as Customer Support</button>
+            <button type="button" className="btn btn-link" onClick={() => setTestLogin(!testLogin)}>Login with actual credentials</button>
+        </>
+    }
 
     const getLoginForm = function () {
+        if(testLogin) {
+            return getTestLoginForm();
+        }
         return (
             <form className="d-flex flex-column align-items-center w-50 border border-1 p-3 rounded-3">
                 <div className="w-100">
@@ -101,6 +114,7 @@ export default function LoginPage() {
                     </div>
                     
                 </div>
+                <button type="button" className="btn btn-link" onClick={() => setTestLogin(!testLogin)}>Login with test credentials</button>
             </form>
         )
     }
@@ -112,7 +126,7 @@ export default function LoginPage() {
     }
 
     return (
-        <main className="mt-5 bg-light d-flex align-items-center" style={{minHeight: "95vh"}}>
+        <main className="mt-5 d-flex align-items-center" style={{minHeight: "95vh"}}>
             <div id="login-container" className="w-100 pt-5 d-flex align-items-center align-content-center justify-content-center flex-column">
                 {isLoading ? <Loading/> : ""}
                 {loggedInUser ? redirectToPage() : getLoginForm()}

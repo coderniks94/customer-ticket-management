@@ -12,6 +12,10 @@ export default function PrivateRoute() {
     let location = useLocation();
 
     useEffect(() => {
+        if(!loggedInUser) {
+            setIsLoading(false);
+            return;
+        }
         console.debug("location modified: ", location);
         console.debug("loggedInUser: ", loggedInUser);
         console.debug("userDetailsFromDb: ", userDetailsFromDb);

@@ -151,6 +151,21 @@ export async function getAllOpenTickets() {
     return result;
 }
 
+export async function getAllClosedTickets() {
+    const q = query(collection(db, ticketsCollection), where("state", "==", "Closed"));
+
+    const querySnapshot = await getDocs(q);
+    var result = [];
+    console.debug("All closed tickets");
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.debug(doc.id, " => ", doc.data());
+        result.push(doc.data());
+        console.debug(doc.data());
+    });
+    return result;
+}
+
 export async function getTicketDetailsById(ticketId) {
     const docRef = doc(db, ticketsCollection, ticketId);
     const docSnap = await getDoc(docRef);

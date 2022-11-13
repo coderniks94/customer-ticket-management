@@ -91,13 +91,13 @@ export default function TicketDetailsPage(){
         return (
             <ul>
                 {ticketData.notes.map((val, index, ticketArray) => {
-                    return <li className='d-flex flex-column border rounded mt-3 p-3' key={Math.random().toString()}>
-                        <div className='d-flex flex-row justify-content-between'>
-                            <p>{ticketArray[ticketArray.length - 1 - index].createdBy.displayName}</p>
-                            <p>{new Date(ticketArray[ticketArray.length - 1 - index].createdOn.seconds * 1000).toUTCString()}</p>
+                    return <li className='d-flex flex-column border rounded mt-2 mb-2' key={Math.random().toString()}>
+                        <div className='d-flex flex-row justify-content-between p-1 bg-light bg-gradient rounded-top'>
+                            <p className='m-0 p-1'>{ticketArray[ticketArray.length - 1 - index].createdBy.displayName}</p>
+                            <p className='m-0 p-1'>{new Date(ticketArray[ticketArray.length - 1 - index].createdOn.seconds * 1000).toUTCString()}</p>
                         </div>
                         <div>
-                            <p>{ticketArray[ticketArray.length - 1 - index].text}</p>
+                            <p className='p-2'>{ticketArray[ticketArray.length - 1 - index].text}</p>
                         </div>
                     </li>
                 })}

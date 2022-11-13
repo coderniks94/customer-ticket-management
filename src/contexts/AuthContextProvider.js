@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
+import Loading from "../components/Loading";
 import { auth } from "../firebase/config";
 import { getUserDetailsFromDbById, updateUserDetails } from "../firebase/dbUserDetailService";
 
@@ -129,7 +130,7 @@ export default function AuthContextProvider(props) {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading ? props.children : <h2>Loading...</h2>}
+            {!loading ? props.children : <Loading/>}
             {/* {props.children} */}
         </AuthContext.Provider>
     )
