@@ -1,7 +1,6 @@
 
 
-import { async } from "@firebase/util";
-import { collection, doc, getDoc, getDocs, onSnapshot, query, runTransaction, serverTimestamp, setDoc, Timestamp, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, query, runTransaction, serverTimestamp, setDoc, Timestamp, where, getCountFromServer } from "firebase/firestore";
 import { db } from "./config";
 
 const ticketsCollection = "tickets";
@@ -123,6 +122,18 @@ export async function getTicketsCreatedByUser(userId) {
         console.debug(doc.data());
     });
     return result;
+}
+
+export async function getUserTicketsCountByState({userId, ticketState}) {
+    ticketState = ticketState == "closed" ? "Closed" : "Open";
+    const coll = collection(db, ticketsCollection);
+    const q = query(coll, where("createdBy.uid", "==", userId), where('state', '==', ticketState));
+    const snapshot = await getDocs(q);
+    console.debug("ticket snapshot: ", snapshot);
+    // console.debug('count: ', snapshot.data().count);
+    console.debug("ticket count: ", snapshot.length);
+    // return snapshot.data().count;
+    return snapshot.length;
 }
 
 export async function getAllOpenTickets() {
