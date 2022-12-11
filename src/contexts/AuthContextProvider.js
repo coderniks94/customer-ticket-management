@@ -16,7 +16,7 @@ export default function AuthContextProvider(props) {
     const [userDetailsFromDb, setUserDetailsFromDb] = useState();
 
     useEffect(function(){
-        console.log("loggedInUser modified");
+        console.debug("loggedInUser modified");
         loggedInUser && getUserDetailsFromDbById(loggedInUser.uid).then(function(response){
             setUserDetailsFromDb(response || {});
         })

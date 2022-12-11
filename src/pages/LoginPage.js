@@ -93,7 +93,7 @@ export default function LoginPage() {
         return (
             <form className="d-flex flex-column align-items-center w-50 border border-1 p-3 rounded-3">
                 <div className="w-100">
-                    <h4>Welcome to Support Assistant!</h4>
+                    <h4>Welcome to Customer Ticket Manager!</h4>
                     <p className="text-secondary">Please enter your details to login</p>
                     <div className="form-group mt-2 mb-2">
                         <label htmlFor="inputEmail">Email address</label>
@@ -126,8 +126,8 @@ export default function LoginPage() {
     }
 
     return (
-        <main className="mt-5 d-flex align-items-center" style={{minHeight: "95vh"}}>
-            <div id="login-container" className="w-100 pt-5 d-flex align-items-center align-content-center justify-content-center flex-column">
+        <main className="mt-5 d-flex align-items-center" style={{minHeight: "50vh"}}>
+            <div id="login-container" className="w-100 d-flex align-items-center align-content-center justify-content-center flex-column">
                 {isLoading ? <Loading/> : ""}
                 {loggedInUser ? redirectToPage() : getLoginForm()}
             </div>
