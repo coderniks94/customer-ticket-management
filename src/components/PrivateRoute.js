@@ -25,10 +25,6 @@ export default function PrivateRoute() {
             loggedInUser,
             userDetailsFromDb
         }
-        // userHasAccessToPage(args).then((response) => {
-        //     setHasPageAccess(response);
-        //     setIsLoading(false);
-        // })
 
         doesUserHaveAccessToEntity(args).then((response) => {
             setHasPageAccess(response);

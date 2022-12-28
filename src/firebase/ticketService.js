@@ -8,19 +8,6 @@ const ticketIdDigits = 6;
 // const increment = FieldValue.increment(1);
 const statsDocRef = doc(db, ticketsCollection, "--stats--");
 
-// async function getStats() {
-//     // const statsRef = doc(db, ticketsCollection, "--stats--");
-//     const docSnap = await getDoc(statsRef);
-//     if (docSnap.exists()) {
-//         console.debug("Document data:", docSnap.data());
-//         return docSnap.data();
-//     } else {
-//         // doc.data() will be undefined in this case
-//         console.debug("No such document!");
-//         return {};
-//     }
-// }
-
 async function incrementAndGetCount() {
     try {
         return await runTransaction(db, async (transaction) => {
@@ -40,14 +27,6 @@ async function incrementAndGetCount() {
         console.debug("Transaction failed: ", e);
     }
 }
-
-// async function incrementTicketCount() {
-//     var statsCount = {
-//         count: increment(1)
-//     }
-//     const response = await updateDoc(statsDocRef, statsCount);
-//     return response;
-// }
 
 function _getTicketId(ticketNumber) {
     var digits = 0;

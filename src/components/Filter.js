@@ -6,25 +6,6 @@ export default function Filter(props) {
     console.debug("Filter props:", props);
     const {filterList} = props;
     console.debug("filterList received: ", filterList);
-
-    // useEffect(() => {
-    //     let filterValuesCopy = { ...filterValues };
-    //     filterList.forEach((category) => {
-    //         filterValuesCopy[category.name] = {};
-    //         category.filterOptions.forEach((option) => {
-    //             filterValuesCopy[category.name][option.name] = false;
-    //         })
-    //     })
-    //     setFilterValues(filterValuesCopy);
-    // }, [])
-
-    
-    // for(var category in filterList) {
-    //     filterValues[filterList[category].categoryName] = {};
-    //     for(var option in category.filterOptions) {
-    //         filterValues[category.categoryName][option.name] = false;
-    //     }
-    // }
     console.debug("filterValues: ",filterValues);
 
     const handleFilterClick = function({filterCategory, filterOption}) {

@@ -19,9 +19,6 @@ export default function AccessControlPage() {
     }, [])
 
     const handleRoleChange = function (event) {
-        // var selectedRole = allRoles.filter((role) => { return role.name === event.target.value })
-        // setRole(selectedRole[0]);
-
         setSelectedRole(allRoles.filter((role) => { return role.name === event.target.value })[0]);
     }
 
@@ -46,10 +43,6 @@ export default function AccessControlPage() {
                     </div>
 
                     <label htmlFor="roleSelect" className="mt-3">Select Role</label>
-                    {/* <select className="form-select" aria-label="Roles" onChange={handleRoleChange} value={selectedRole.name} id={"roleSelect"}>
-                        <option value={""}>---Select Role---</option>
-                        {allRoles.map((role) => <option value={role.name} key={role.id}>{role.name}</option>)}
-                    </select> */}
 
                     {allRoles.map(function(role){
                         return (
@@ -61,19 +54,6 @@ export default function AccessControlPage() {
                             </div>
                         )
                     })}
-
-                    {/* <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                            <label className="form-check-label" for="flexCheckDefault">
-                                Default checkbox
-                            </label>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked/>
-                            <label className="form-check-label" for="flexCheckChecked">
-                                Checked checkbox
-                            </label>
-                    </div> */}
                 </form>
             </>
         )

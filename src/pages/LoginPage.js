@@ -131,9 +131,6 @@ export default function LoginPage() {
                 {isLoading ? <Loading/> : ""}
                 {loggedInUser ? redirectToPage() : getLoginForm()}
             </div>
-            {/* <div id="right-container" className="bg-secondary w-100">
-                {getLogoImage()}
-            </div> */}
         </main>
     )
 }

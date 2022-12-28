@@ -47,12 +47,6 @@ export default function ProfilePage() {
         setEmail(loggedInUser.email || "");
         setCompany(userDetailsFromDb.company || "");
         setUserRoles(userDetailsFromDb.roles || []);
-        // getUserDetailsFromDbById(loggedInUser.uid).then(function(response){
-        //     // console.debug("user details: ",response);
-        //     // setUserDetails(response);
-        //     setCompany(userDetailsFromDb.company || "");
-        //     setUserRoles(userDetailsFromDb.roles || []);
-        // })
     }, [loggedInUser]);
 
     const handleUpdateProfile = function(event) {
@@ -147,12 +141,6 @@ export default function ProfilePage() {
                     {/* {companiesList.map((company)=>{return <option value={company.name}>company.name</option>}} */}
                     {companiesList.map((company) => <option value={company.name} key={company.id}>{company.name}</option>)}
                 </select>
-
-                {/* {userRoles && userRoles.length > 0 && <div>
-                    <label htmlFor="companySelect">Roles</label>
-                userRoles.map((role) => {
-                    return <span className="badge rounded-pill bg-secondary" key={role.id}>{role.name}</span>
-                })</div>} */}
 
                 {userRoles && userRoles.length > 0 && 
                 <div>

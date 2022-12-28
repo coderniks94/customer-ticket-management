@@ -153,16 +153,6 @@ export default function SignupPage() {
                                 placeholder="eg. https://example.com/jane-q-user/profile.jpg" value={photoUrl} onChange={(event) => setPhotoUrl(event.target.value)} />
                             {/* <small id="photoUrlHelp" className="form-text text-muted">eg. https://example.com/jane-q-user/profile.jpg</small> */}
                         </div>
-                        {/* <div className="dropdown">
-                        <button className="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Company
-                        </button>
-                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                            <li className="dropdown-item" value={"google"}>Google</li>
-                            <li className="dropdown-item" value={"google"}>Facebook</li>
-                            <li className="dropdown-item" value={"amazon"}>Amazon</li>
-                        </ul>
-                    </div> */}
 
                         <label htmlFor="companySelect mt-2">Company</label>
                         <select className="form-select" aria-label="Company" onChange={(event) => handleCompanyChange(event)} defaultValue={""} id={"companySelect"}>

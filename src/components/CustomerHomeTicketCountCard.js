@@ -27,9 +27,6 @@ export default function CustomerHomeTicketCountCard(props) {
         }
 
         async function fetchData() {
-            // You can await here
-            // const response = await MyAPI.getData(someId);
-            // const count = await getUserTicketsCountByState({userId: loggedInUser.uid, ticketState});
             const ticketFilterState = ticketState == "open" ? "Open" : (ticketState == "closed" ? "Closed" : "");
             const ticketsByUser = await getTicketsCreatedByUser(loggedInUser.uid);
             if(!ticketFilterState) {
@@ -40,8 +37,6 @@ export default function CustomerHomeTicketCountCard(props) {
                 }).length;
                 setTicketCount(count);
             }
-            
-            // ...
         }
         fetchData();
 

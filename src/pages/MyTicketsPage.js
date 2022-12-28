@@ -42,9 +42,6 @@ export default function MyTicketsPage() {
         get: (searchParams, prop) => searchParams.get(prop),
     });
     console.debug("queryParams.state:", queryParams.state);
-    // const stateUrlParam = useSearchParams();
-    // stateUrlParam.get
-    // console.debug("stateUrlParam: ",stateUrlParam);
 
     useEffect(() => {
         getTicketsCreatedByUser(loggedInUser.uid).then((response) => {

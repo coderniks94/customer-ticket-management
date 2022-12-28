@@ -11,8 +11,6 @@ export default function TicketDetailsPage(){
     const [newNotes, setNewNotes] = useState("");
     const [allTicketStates, setAllTicketStates] = useState(["Open", "Closed"]);
     const [isSupportRole, setIsSupportRole] = useState(false);
-    // const [userDetails, setUserDetails] = useState();
-    // const location = useLocation();
 
     const location = useLocation();
     const { ticketId } = useParams();
@@ -20,23 +18,6 @@ export default function TicketDetailsPage(){
 
     
     useEffect(function () {
-        // if (location && location.state && location.state.ticket) {
-        //     setTicketData(location.state.ticket);
-        //     console.debug("location.state.ticket: ", location.state.ticket);
-        // } else {
-
-        // getTicketDetailsById(ticketId).then((response) => {
-        //     setTicketData(response);
-        //     console.debug("response: ", response);
-        // });
-
-        // getUserDetailsFromDbById(loggedInUser.uid).then((response)=>{
-        //     // console.debug("User details: ", response);
-        //     setUserDetails(response);
-        //     setUserHasSupportRole(response);
-        // })
-
-        // console.debug("userDetailsFromDb: ", userDetailsFromDb);
 
         var supportRole = userDetailsFromDb.roles.filter((role)=>{
             return role.name === "support";
@@ -82,8 +63,6 @@ export default function TicketDetailsPage(){
         });
         setTicketData(ticketDataCopy);
         updateTicketDetails(ticketDataCopy);//.then(()=>{
-        //     window.location.reload(true);
-        // })
         setNewNotes("");
     }
 
@@ -108,22 +87,9 @@ export default function TicketDetailsPage(){
     const handleTicketStateChange = function(event){
         event.preventDefault();
         var ticketDataCopy = {...ticketData};
-        // ticketDataCopy.state = event.target.value;
-        // let message = "Ticket state changed";
-        // if(ticketDataCopy.state === "Open" && event.target.value === "Closed") {
-        //     message = "Ticket closed by " + loggedInUser.displayName;
-        // } else if (ticketDataCopy.state == "Closed" && event.target.value === "Open") {
-        //     message = "Ticket opened by " + loggedInUser.displayName;
-        // }
+
         ticketDataCopy.state = event.target.value;
-        // ticketDataCopy.notes.push({
-        //     createdBy: {
-        //         displayName: loggedInUser.displayName,
-        //         uid: loggedInUser.uid
-        //     },
-        //     createdOn: Timestamp.now(),
-        //     text: message
-        // });
+
         setTicketData(ticketDataCopy);
     }
 

@@ -78,9 +78,6 @@ export default function CreateTicketPage() {
                     <label htmlFor="longDescription">Long description</label>
                     <textarea className="form-control" id="longDescription" rows="3" value={longDescription}
                         placeholder="Describe your issue in detail" onChange={(event)=>setLongDescription(event.target.value)}></textarea>
-                    {/* <input type="text" className="form-control" id="longDescription" aria-describedby="longDescriptionHelp" value={longDescription}
-                        placeholder="Describe your issue in detail" onChange={(event)=>setLongDescription(event.target.value)}/> */}
-                    {/* <small id="longDescriptionHelp" className="form-text text-muted"></small> */}
                 </div>
                 
                 {alert && alert.message ? <AlertMessage alert={alert} className="mt-3 pt-3"/> : ""}
