@@ -1,12 +1,80 @@
-# Getting Started with Create React App
+# Overview
+
+Find the deployed project [here](https://customer-ticket-manager.web.app/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Basic React Firebase project for managing Customer Tickets.
 
-In the project directory, you can run:
+Login as a customer or support agent, view list of tickets and take action on them.
 
-### `npm start`
+Supports real-time chat on the ticket
+
+
+## Supported use cases as customer
+
+Login to portal or signup as new customer
+
+View Summary of created older tickets (open/closed/all)
+
+View list of tickets
+
+Open any ticket and view details of that
+
+Create Journal entries
+
+Chat in real-time with support agent
+
+## Supported use cases as support agent
+
+Login to portal as support agent
+
+View summary of all open customer tickets
+
+View list of open customer tickets
+
+Assign open tickets to self
+
+Create Journal entries and provide resolution to the customer
+
+Chat in real-time with customer
+
+### Create firebase project
+
+1. Create firebase project.
+2. Copy the configurations in .env file with following properties.
+
+REACT_APP_FIREBASE_API_KEY
+
+REACT_APP_FIREBASE_AUTH_DOMAIN
+
+REACT_APP_FIREBASE_PROJECT_ID
+
+REACT_APP_FIREBASE_STORAGE_BUCKET
+
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID
+
+REACT_APP_FIREBASE_APP_ID
+
+REACT_APP_FIREBASE_MEASUREMENT_ID
+
+3. Add firestore to your project
+
+4. Add following collections to your firestore 
+
+accessControl
+
+companies
+
+roles
+
+tickets
+
+userDetails
+
+### Run the project
+
+Run `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
